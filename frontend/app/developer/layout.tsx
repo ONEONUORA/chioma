@@ -32,8 +32,8 @@ export default function DeveloperLayout({ children }: { children: ReactNode }) {
                   Manage outbound integrations
                 </h1>
                 <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300 sm:text-base">
-                  Configure webhooks, inspect delivery activity, and validate payloads
-                  for external systems connected to Chioma.
+                  Configure webhooks, inspect delivery activity, and validate
+                  payloads for external systems connected to Chioma.
                 </p>
               </div>
 
@@ -54,7 +54,10 @@ export default function DeveloperLayout({ children }: { children: ReactNode }) {
               </div>
             </div>
 
-            <nav className="mt-6 flex flex-wrap gap-3" aria-label="Developer portal">
+            <nav
+              className="mt-6 flex flex-wrap gap-3"
+              aria-label="Developer portal"
+            >
               {developerNavItems.map((item) => {
                 const active =
                   item.href === '/developer'
@@ -86,9 +89,12 @@ export default function DeveloperLayout({ children }: { children: ReactNode }) {
               </section>
             ) : !isDeveloperPortalUser(user) ? (
               <section className="rounded-3xl border border-amber-300/20 bg-amber-500/10 p-6 text-amber-50">
-                <h2 className="text-2xl font-semibold">Developer access required</h2>
+                <h2 className="text-2xl font-semibold">
+                  Developer access required
+                </h2>
                 <p className="mt-3 text-sm text-amber-100/80">
-                  This portal is restricted to admin and developer integration accounts.
+                  This portal is restricted to admin and developer integration
+                  accounts.
                 </p>
               </section>
             ) : (

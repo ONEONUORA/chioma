@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import StarRating from '@/components/common/StarRating';
+import { StarRating } from '@/components/common/StarRating';
 
 const MOCK_REVIEWS = [
   {
@@ -53,7 +53,7 @@ export default function ReviewsList() {
           >
             <div className="bg-slate-700/50 hover:bg-slate-600 transition-all rounded-xl p-4 border border-white/5 flex flex-col gap-2">
               <div className="flex justify-between">
-                <StarRating rating={r.rating} />
+                <StarRating value={r.rating} readonly />
                 <span className="text-xs text-slate-400">{r.date}</span>
               </div>
               <p className="text-white text-sm">&quot;{r.text}&quot;</p>

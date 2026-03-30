@@ -1,25 +1,7 @@
-'use client';
-
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
-import { QueryProvider } from '@/lib/query/provider';
-import { StoreHydrator } from '@/store/StoreHydrator';
-
-import ErrorMonitoringProvider from '@/components/error/ErrorMonitoringProvider';
-import NetworkStatusBanner from '@/components/error/NetworkStatusBanner';
-import { ErrorProvider } from '@/components/error/ErrorProvider';
-
-import PwaController from '@/components/pwa/PwaController';
-
-import { ModalProvider } from '@/contexts/ModalContext';
-import { ModalManager } from '@/components/modals';
-
-import { OfflineIndicator } from '@/components/offline';
-import { ToastProvider } from '@/components/ui';
-
 import { Inter } from 'next/font/google';
-import { RouteAnnouncer } from '@/components/accessibility/RouteAnnouncer';
 
 export const viewport: Viewport = {
   themeColor: '#1d4ed8',
@@ -50,6 +32,8 @@ export const metadata: Metadata = {
   manifest: '/manifest.webmanifest',
 };
 
+import { RootLayoutClient } from './RootLayoutClient';
+
 export default function RootLayout({
   children,
 }: {
@@ -73,26 +57,7 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <QueryProvider>
-          <ModalProvider>
-            <ErrorProvider>
-              <StoreHydrator />
-              <ErrorMonitoringProvider />
-              <PwaController />
-              <NetworkStatusBanner />
-              <RouteAnnouncer />
-
-              {/* Main content (a11y target) */}
-              <div id="main-content" tabIndex={-1}>
-                {children}
-              </div>
-
-              <ModalManager />
-              <OfflineIndicator />
-              <ToastProvider />
-            </ErrorProvider>
-          </ModalProvider>
-        </QueryProvider>
+        <RootLayoutClient>{children}</RootLayoutClient>
       </body>
     </html>
   );

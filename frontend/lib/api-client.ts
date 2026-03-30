@@ -1,6 +1,7 @@
 /**
  * Centralized API client for frontend requests.
  * Adds timeout handling, retry backoff, typed error classification, and logging.
+ * Supports mock API mode for frontend-only development.
  */
 
 import {
@@ -10,6 +11,7 @@ import {
   logError,
   withRetry,
 } from '@/lib/errors';
+import { getMockData, shouldUseMockApi } from '@/lib/mock-api';
 
 type RequestConfig = {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -78,6 +80,15 @@ class ApiClient {
     endpoint: string,
     config: RequestConfig = {},
   ): Promise<ApiResponse<T>> {
+    // Use mock API if enabled
+    if (shouldUseMockApi()) {
+      const mockResponse = getMockData(endpoint);
+      return {
+        data: mockResponse as T,
+        status: 200,
+      };
+    }
+
     const {
       method = 'GET',
       headers = {},

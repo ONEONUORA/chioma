@@ -39,11 +39,13 @@ export function WebhookTest({
         <div>
           <h2 className="text-xl font-semibold text-white">Test delivery</h2>
           <p className="mt-1 text-sm text-slate-300">
-            Send a sample event, verify your receiver, and inspect payload examples.
+            Send a sample event, verify your receiver, and inspect payload
+            examples.
           </p>
         </div>
         <div className="rounded-2xl border border-cyan-400/20 bg-cyan-500/10 px-4 py-3 text-xs text-cyan-100">
-          Signing key: <span className="font-mono">{webhook.signingSecret}</span>
+          Signing key:{' '}
+          <span className="font-mono">{webhook.signingSecret}</span>
         </div>
       </div>
 
@@ -59,13 +61,13 @@ export function WebhookTest({
                 onChange={(event) => setEventName(event.target.value)}
                 className="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/45 px-4 py-2.5 text-sm text-white outline-none transition focus:border-blue-400"
               >
-                {[...new Set([...webhook.events, ...AVAILABLE_WEBHOOK_EVENTS])].map(
-                  (event) => (
-                    <option key={event} value={event}>
-                      {event}
-                    </option>
-                  ),
-                )}
+                {[
+                  ...new Set([...webhook.events, ...AVAILABLE_WEBHOOK_EVENTS]),
+                ].map((event) => (
+                  <option key={event} value={event}>
+                    {event}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
@@ -102,7 +104,9 @@ export function WebhookTest({
 
         <div className="space-y-4">
           <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4">
-            <h3 className="text-sm font-semibold text-white">Available events</h3>
+            <h3 className="text-sm font-semibold text-white">
+              Available events
+            </h3>
             <div className="mt-3 flex flex-wrap gap-2">
               {AVAILABLE_WEBHOOK_EVENTS.map((event) => (
                 <span
@@ -118,7 +122,7 @@ export function WebhookTest({
           <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4">
             <h3 className="text-sm font-semibold text-white">cURL example</h3>
             <pre className="mt-3 overflow-x-auto rounded-xl bg-slate-950/70 p-3 text-xs text-slate-200">
-{`curl -X ${webhook.method} '${webhook.url}' \\
+              {`curl -X ${webhook.method} '${webhook.url}' \\
   -H 'Content-Type: application/json' \\
   -H 'X-Chioma-Signature: ${webhook.signingSecret}' \\
   -d '${payload.replace(/\n/g, '')}'`}

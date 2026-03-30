@@ -10,7 +10,11 @@ interface ApiKeyGenerateProps {
   onDone: () => void;
 }
 
-export function ApiKeyGenerate({ keyName, generatedKey, onDone }: ApiKeyGenerateProps) {
+export function ApiKeyGenerate({
+  keyName,
+  generatedKey,
+  onDone,
+}: ApiKeyGenerateProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -44,10 +48,13 @@ export function ApiKeyGenerate({ keyName, generatedKey, onDone }: ApiKeyGenerate
       <div className="flex items-start gap-3 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30">
         <AlertTriangle size={20} className="text-amber-400 shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-semibold text-amber-300">Save your key now</p>
+          <p className="text-sm font-semibold text-amber-300">
+            Save your key now
+          </p>
           <p className="text-xs text-amber-300/70 mt-1">
-            This is the only time your full API key will be shown. Copy or download it before
-            closing this dialog — it cannot be recovered afterwards.
+            This is the only time your full API key will be shown. Copy or
+            download it before closing this dialog — it cannot be recovered
+            afterwards.
           </p>
         </div>
       </div>

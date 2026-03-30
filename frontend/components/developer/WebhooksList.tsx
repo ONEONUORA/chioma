@@ -2,7 +2,14 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { Activity, Archive, Pencil, Play, RefreshCw, Trash2 } from 'lucide-react';
+import {
+  Activity,
+  Archive,
+  Pencil,
+  Play,
+  RefreshCw,
+  Trash2,
+} from 'lucide-react';
 import type { DeveloperWebhook, WebhookStatus } from '@/lib/developer-webhooks';
 
 type WebhooksListProps = {
@@ -31,8 +38,12 @@ export function WebhooksList({
   onRetry,
 }: WebhooksListProps) {
   const [query, setQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all' | WebhookStatus>('all');
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'recent'>('newest');
+  const [statusFilter, setStatusFilter] = useState<'all' | WebhookStatus>(
+    'all',
+  );
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'recent'>(
+    'newest',
+  );
   const [page, setPage] = useState(1);
 
   const filtered = useMemo(() => {
@@ -49,13 +60,16 @@ export function WebhooksList({
         return (
           webhook.label.toLowerCase().includes(normalized) ||
           webhook.url.toLowerCase().includes(normalized) ||
-          webhook.events.some((event) => event.toLowerCase().includes(normalized))
+          webhook.events.some((event) =>
+            event.toLowerCase().includes(normalized),
+          )
         );
       })
       .sort((left, right) => {
         if (sortBy === 'oldest') {
           return (
-            new Date(left.createdAt).getTime() - new Date(right.createdAt).getTime()
+            new Date(left.createdAt).getTime() -
+            new Date(right.createdAt).getTime()
           );
         }
 
@@ -67,19 +81,28 @@ export function WebhooksList({
         }
 
         return (
-          new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime()
+          new Date(right.createdAt).getTime() -
+          new Date(left.createdAt).getTime()
         );
       });
   }, [query, sortBy, statusFilter, webhooks]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
+    // Reset to page 1 when filters change
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPage(1);
   }, [query, sortBy, statusFilter]);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
-    setPage((current) => Math.min(current, totalPages));
+    // Adjust current page if it exceeds total pages
+    if (page > totalPages && totalPages > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPage(totalPages);
+    }
   }, [totalPages]);
 
   const paginated = useMemo(() => {
@@ -91,9 +114,12 @@ export function WebhooksList({
     <section className="rounded-3xl border border-white/10 bg-white/5 p-6">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-white">Configured webhooks</h2>
+          <h2 className="text-xl font-semibold text-white">
+            Configured webhooks
+          </h2>
           <p className="mt-1 text-sm text-slate-300">
-            Search, filter, and manage webhook endpoints for external integrations.
+            Search, filter, and manage webhook endpoints for external
+            integrations.
           </p>
         </div>
 
@@ -132,7 +158,9 @@ export function WebhooksList({
 
       {filtered.length === 0 ? (
         <div className="mt-6 rounded-3xl border border-dashed border-white/15 bg-slate-950/30 p-10 text-center">
-          <h3 className="text-lg font-semibold text-white">No webhooks found</h3>
+          <h3 className="text-lg font-semibold text-white">
+            No webhooks found
+          </h3>
           <p className="mt-2 text-sm text-slate-300">
             Create a webhook or adjust the filters to see matching integrations.
           </p>
@@ -166,7 +194,9 @@ export function WebhooksList({
                       <span className="text-base font-semibold text-white">
                         {webhook.label}
                       </span>
-                      <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${statusTone}`}>
+                      <span
+                        className={`rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${statusTone}`}
+                      >
                         {webhook.enabled ? webhook.status : 'disabled'}
                       </span>
                     </div>
@@ -177,7 +207,9 @@ export function WebhooksList({
                       {webhook.events.join(', ')}
                     </p>
                     <div className="mt-3 flex flex-wrap gap-4 text-xs text-slate-400">
-                      <span>Created {new Date(webhook.createdAt).toLocaleString()}</span>
+                      <span>
+                        Created {new Date(webhook.createdAt).toLocaleString()}
+                      </span>
                       <span>
                         Last triggered{' '}
                         {webhook.lastTriggeredAt
@@ -262,7 +294,9 @@ export function WebhooksList({
             </button>
             <button
               type="button"
-              onClick={() => setPage((value) => Math.min(totalPages, value + 1))}
+              onClick={() =>
+                setPage((value) => Math.min(totalPages, value + 1))
+              }
               disabled={page === totalPages}
               className="rounded-xl border border-white/10 px-3 py-2 text-sm text-slate-200 transition hover:bg-white/5 disabled:cursor-not-allowed disabled:opacity-50"
             >

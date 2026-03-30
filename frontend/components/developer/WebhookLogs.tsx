@@ -25,7 +25,8 @@ export function WebhookLogs({ logs }: WebhookLogsProps) {
         <div>
           <h2 className="text-xl font-semibold text-white">Delivery logs</h2>
           <p className="mt-1 text-sm text-slate-300">
-            Recent attempts, response codes, and payload samples for this webhook.
+            Recent attempts, response codes, and payload samples for this
+            webhook.
           </p>
         </div>
         <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">
@@ -63,7 +64,8 @@ export function WebhookLogs({ logs }: WebhookLogsProps) {
                     </span>
                   </div>
                   <p className="mt-2 text-xs text-slate-400">
-                    {new Date(log.attemptedAt).toLocaleString()} • {log.durationMs}
+                    {new Date(log.attemptedAt).toLocaleString()} •{' '}
+                    {log.durationMs}
                     ms • HTTP {log.responseCode}
                   </p>
                 </div>

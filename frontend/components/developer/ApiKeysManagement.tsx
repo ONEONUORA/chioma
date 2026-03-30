@@ -11,7 +11,8 @@ import type { ApiKey } from './ApiKeysList';
 import type { ApiKeyFormValues } from './ApiKeyForm';
 
 function generateKey(prefix: string): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const chars =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
   const array = new Uint8Array(40);
   crypto.getRandomValues(array);
@@ -24,7 +25,10 @@ export function ApiKeysManagement() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [generatedKey, setGeneratedKey] = useState<{ key: string; name: string } | null>(null);
+  const [generatedKey, setGeneratedKey] = useState<{
+    key: string;
+    name: string;
+  } | null>(null);
 
   const selectedKey = useMemo(
     () => apiKeys.find((k) => k.id === selectedId),
@@ -42,7 +46,9 @@ export function ApiKeysManagement() {
       permissions: data.permissions,
       status: 'active',
       createdAt: new Date().toISOString(),
-      expiresAt: data.expiresAt ? new Date(data.expiresAt).toISOString() : undefined,
+      expiresAt: data.expiresAt
+        ? new Date(data.expiresAt).toISOString()
+        : undefined,
     };
     setApiKeys((prev) => [newKey, ...prev]);
     setGeneratedKey({ key: fullKey, name: data.name });
@@ -59,7 +65,9 @@ export function ApiKeysManagement() {
               name: data.name,
               description: data.description || undefined,
               permissions: data.permissions,
-              expiresAt: data.expiresAt ? new Date(data.expiresAt).toISOString() : undefined,
+              expiresAt: data.expiresAt
+                ? new Date(data.expiresAt).toISOString()
+                : undefined,
             }
           : k,
       ),
@@ -70,14 +78,26 @@ export function ApiKeysManagement() {
   };
 
   const handleRevoke = (id: string) => {
-    if (!confirm('Revoke this API key? All requests using it will immediately fail.')) return;
-    setApiKeys((prev) => prev.map((k) => (k.id === id ? { ...k, status: 'revoked' } : k)));
+    if (
+      !confirm(
+        'Revoke this API key? All requests using it will immediately fail.',
+      )
+    )
+      return;
+    setApiKeys((prev) =>
+      prev.map((k) => (k.id === id ? { ...k, status: 'revoked' } : k)),
+    );
     if (selectedId === id) setSelectedId(null);
     toast.success('API key revoked');
   };
 
   const handleRotate = (id: string) => {
-    if (!confirm('Rotate this key? The current key will be revoked and a new one generated.')) return;
+    if (
+      !confirm(
+        'Rotate this key? The current key will be revoked and a new one generated.',
+      )
+    )
+      return;
     const key = apiKeys.find((k) => k.id === id);
     if (!key) return;
 
@@ -85,7 +105,9 @@ export function ApiKeysManagement() {
     const prefix = fullKey.slice(0, 8);
     setApiKeys((prev) =>
       prev.map((k) =>
-        k.id === id ? { ...k, keyPrefix: prefix, createdAt: new Date().toISOString() } : k,
+        k.id === id
+          ? { ...k, keyPrefix: prefix, createdAt: new Date().toISOString() }
+          : k,
       ),
     );
     setGeneratedKey({ key: fullKey, name: key.name });
@@ -101,7 +123,9 @@ export function ApiKeysManagement() {
             <KeyRound size={28} />
           </div>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-white">API Keys</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-white">
+              API Keys
+            </h1>
             <p className="text-blue-200/60 mt-1">
               Manage your API keys for platform integration.
             </p>
@@ -134,7 +158,9 @@ export function ApiKeysManagement() {
       {showForm && (
         <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10">
           <ApiKeyForm
-            apiKey={editingId ? apiKeys.find((k) => k.id === editingId) : undefined}
+            apiKey={
+              editingId ? apiKeys.find((k) => k.id === editingId) : undefined
+            }
             onSubmit={(data) =>
               editingId ? handleUpdate(editingId, data) : handleCreate(data)
             }
@@ -171,7 +197,9 @@ export function ApiKeysManagement() {
             />
           ) : (
             <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10 flex items-center justify-center min-h-[400px]">
-              <p className="text-blue-200/60">Select an API key to view details</p>
+              <p className="text-blue-200/60">
+                Select an API key to view details
+              </p>
             </div>
           )}
         </div>

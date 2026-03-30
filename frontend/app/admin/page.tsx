@@ -35,7 +35,8 @@ export default function AdminHomePage() {
               Developer Portal
             </h2>
             <p className="mt-1 text-sm text-blue-200/65">
-              Open webhook management and integration tooling for outbound events.
+              Open webhook management and integration tooling for outbound
+              events.
             </p>
           </Link>
 

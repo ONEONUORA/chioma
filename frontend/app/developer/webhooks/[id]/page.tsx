@@ -41,7 +41,9 @@ export default function DeveloperWebhookDetailPage() {
         );
 
         if (cancelled) return;
-        setWebhooks(response.data.filter((webhook) => webhook.ownerId === user.id));
+        setWebhooks(
+          response.data.filter((webhook) => webhook.ownerId === user.id),
+        );
       } catch {
         if (cancelled) return;
         setWebhooks(loadDeveloperWebhooks(user.id));
@@ -78,13 +80,17 @@ export default function DeveloperWebhookDetailPage() {
     if (!webhook) return;
 
     try {
-      await apiClient.post(`/developer/webhooks/${webhook.id}/test`, {
-        event,
-        payload,
-      }, {
-        retries: 1,
-        timeoutMs: 5000,
-      });
+      await apiClient.post(
+        `/developer/webhooks/${webhook.id}/test`,
+        {
+          event,
+          payload,
+        },
+        {
+          retries: 1,
+          timeoutMs: 5000,
+        },
+      );
     } catch {
       // Fall back to local-only persistence below.
     }
@@ -125,7 +131,8 @@ export default function DeveloperWebhookDetailPage() {
       <section className="rounded-3xl border border-amber-300/20 bg-amber-500/10 p-6 text-amber-50">
         <h2 className="text-2xl font-semibold">Webhook not found</h2>
         <p className="mt-3 text-sm text-amber-100/80">
-          The requested webhook does not exist in the current developer workspace.
+          The requested webhook does not exist in the current developer
+          workspace.
         </p>
       </section>
     );
@@ -141,7 +148,10 @@ export default function DeveloperWebhookDetailPage() {
           Developer Portal
         </Link>
         <ChevronRight className="h-4 w-4 text-slate-500" />
-        <Link href="/developer/webhooks" className="transition hover:text-white">
+        <Link
+          href="/developer/webhooks"
+          className="transition hover:text-white"
+        >
           Webhooks
         </Link>
         <ChevronRight className="h-4 w-4 text-slate-500" />
@@ -167,9 +177,18 @@ export default function DeveloperWebhookDetailPage() {
           </div>
 
           <div className="grid gap-3 sm:grid-cols-3">
-            <MetricCard label="Status" value={webhook.enabled ? webhook.status : 'disabled'} />
-            <MetricCard label="Deliveries" value={String(webhook.stats.deliveries)} />
-            <MetricCard label="Failures" value={String(webhook.stats.failedDeliveries)} />
+            <MetricCard
+              label="Status"
+              value={webhook.enabled ? webhook.status : 'disabled'}
+            />
+            <MetricCard
+              label="Deliveries"
+              value={String(webhook.stats.deliveries)}
+            />
+            <MetricCard
+              label="Failures"
+              value={String(webhook.stats.failedDeliveries)}
+            />
           </div>
         </div>
 
@@ -206,16 +225,18 @@ export default function DeveloperWebhookDetailPage() {
               Headers and signing
             </p>
             <pre className="mt-3 overflow-x-auto rounded-xl bg-slate-950/70 p-3 text-xs text-slate-200">
-{JSON.stringify(
-  {
-    headers: webhook.headers,
-    authentication: webhook.authentication,
-    signingSecret: webhook.signingSecret,
-    samplePayload: buildPayloadExample(webhook.events[0] ?? 'agreement.created'),
-  },
-  null,
-  2,
-)}
+              {JSON.stringify(
+                {
+                  headers: webhook.headers,
+                  authentication: webhook.authentication,
+                  signingSecret: webhook.signingSecret,
+                  samplePayload: buildPayloadExample(
+                    webhook.events[0] ?? 'agreement.created',
+                  ),
+                },
+                null,
+                2,
+              )}
             </pre>
           </div>
         </div>
@@ -230,8 +251,12 @@ export default function DeveloperWebhookDetailPage() {
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4">
-      <p className="text-xs uppercase tracking-[0.16em] text-slate-400">{label}</p>
-      <p className="mt-2 text-xl font-semibold text-white capitalize">{value}</p>
+      <p className="text-xs uppercase tracking-[0.16em] text-slate-400">
+        {label}
+      </p>
+      <p className="mt-2 text-xl font-semibold text-white capitalize">
+        {value}
+      </p>
     </div>
   );
 }

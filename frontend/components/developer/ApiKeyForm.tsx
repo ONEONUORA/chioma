@@ -36,7 +36,12 @@ const AVAILABLE_PERMISSIONS = [
   'webhooks:write',
 ];
 
-export function ApiKeyForm({ apiKey, onSubmit, onCancel, isLoading = false }: ApiKeyFormProps) {
+export function ApiKeyForm({
+  apiKey,
+  onSubmit,
+  onCancel,
+  isLoading = false,
+}: ApiKeyFormProps) {
   const {
     register,
     handleSubmit,
@@ -62,25 +67,35 @@ export function ApiKeyForm({ apiKey, onSubmit, onCancel, isLoading = false }: Ap
         <h3 className="text-lg font-bold text-white">
           {apiKey ? 'Edit API Key' : 'New API Key'}
         </h3>
-        <button type="button" onClick={onCancel} className="p-2 text-blue-200/60 hover:text-white transition-colors">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="p-2 text-blue-200/60 hover:text-white transition-colors"
+        >
           <X size={20} />
         </button>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-white mb-2">Key Name *</label>
+          <label className="block text-sm font-medium text-white mb-2">
+            Key Name *
+          </label>
           <input
             {...register('name', { required: 'Name is required' })}
             placeholder="e.g. Production Integration"
             className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-blue-200/40 focus:outline-none focus:bg-white/10 focus:border-blue-500 transition-all"
             disabled={isLoading}
           />
-          {errors.name && <p className="text-sm text-rose-400 mt-1">{errors.name.message}</p>}
+          {errors.name && (
+            <p className="text-sm text-rose-400 mt-1">{errors.name.message}</p>
+          )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-white mb-2">Description</label>
+          <label className="block text-sm font-medium text-white mb-2">
+            Description
+          </label>
           <input
             {...register('description')}
             placeholder="Optional description for this key"
@@ -90,7 +105,9 @@ export function ApiKeyForm({ apiKey, onSubmit, onCancel, isLoading = false }: Ap
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-white mb-3">Permissions / Scopes *</label>
+          <label className="block text-sm font-medium text-white mb-3">
+            Permissions / Scopes *
+          </label>
           <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-1">
             {AVAILABLE_PERMISSIONS.map((perm) => (
               <label
@@ -100,7 +117,9 @@ export function ApiKeyForm({ apiKey, onSubmit, onCancel, isLoading = false }: Ap
                 <input
                   type="checkbox"
                   value={perm}
-                  {...register('permissions', { required: 'Select at least one permission' })}
+                  {...register('permissions', {
+                    required: 'Select at least one permission',
+                  })}
                   className="accent-cyan-500"
                   disabled={isLoading}
                 />
@@ -109,12 +128,16 @@ export function ApiKeyForm({ apiKey, onSubmit, onCancel, isLoading = false }: Ap
             ))}
           </div>
           {errors.permissions && (
-            <p className="text-sm text-rose-400 mt-1">{errors.permissions.message}</p>
+            <p className="text-sm text-rose-400 mt-1">
+              {errors.permissions.message}
+            </p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-white mb-2">Expiration Date</label>
+          <label className="block text-sm font-medium text-white mb-2">
+            Expiration Date
+          </label>
           <input
             {...register('expiresAt')}
             type="date"
@@ -122,7 +145,9 @@ export function ApiKeyForm({ apiKey, onSubmit, onCancel, isLoading = false }: Ap
             className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:bg-white/10 focus:border-blue-500 transition-all [color-scheme:dark]"
             disabled={isLoading}
           />
-          <p className="text-xs text-blue-200/60 mt-1.5">Leave blank for a non-expiring key</p>
+          <p className="text-xs text-blue-200/60 mt-1.5">
+            Leave blank for a non-expiring key
+          </p>
         </div>
       </div>
 

@@ -1,13 +1,20 @@
 'use client';
 
-import { LifeBuoy, ExternalLink, MessageCircle, Mail, BookOpen } from 'lucide-react';
+import {
+  LifeBuoy,
+  ExternalLink,
+  MessageCircle,
+  Mail,
+  BookOpen,
+} from 'lucide-react';
 
 const RESOURCES = [
   {
     id: 'telegram',
     icon: MessageCircle,
     label: 'Community (Telegram)',
-    description: 'Join 500+ builders in the Chioma developer community. Ask questions, share projects.',
+    description:
+      'Join 500+ builders in the Chioma developer community. Ask questions, share projects.',
     href: 'https://t.me/chiomagroup',
     cta: 'Join the group',
     color: 'text-blue-400',
@@ -17,7 +24,8 @@ const RESOURCES = [
     id: 'email',
     icon: Mail,
     label: 'Email Support',
-    description: 'For urgent issues, billing questions, or private security disclosures.',
+    description:
+      'For urgent issues, billing questions, or private security disclosures.',
     href: 'mailto:developers@chioma.app',
     cta: 'Send an email',
     color: 'text-indigo-400',
@@ -27,7 +35,8 @@ const RESOURCES = [
     id: 'docs',
     icon: BookOpen,
     label: 'Full Documentation',
-    description: 'Deep-dive guides covering authentication flows, Stellar concepts, and escrow patterns.',
+    description:
+      'Deep-dive guides covering authentication flows, Stellar concepts, and escrow patterns.',
     href: '/developer/docs',
     cta: 'Read the docs',
     color: 'text-emerald-400',
@@ -65,7 +74,7 @@ export default function DeveloperSupportPage() {
         <div>
           <h2 className="text-2xl font-bold text-white">Support</h2>
           <p className="text-blue-200/60 text-sm mt-0.5">
-            We're here to help you ship faster on Stellar.
+            We&apos;re here to help you ship faster on Stellar.
           </p>
         </div>
       </div>
@@ -86,9 +95,13 @@ export default function DeveloperSupportPage() {
               <Icon size={24} className={r.color} />
               <div>
                 <h3 className="text-sm font-bold text-white">{r.label}</h3>
-                <p className="text-blue-200/60 text-xs mt-1.5 leading-relaxed">{r.description}</p>
+                <p className="text-blue-200/60 text-xs mt-1.5 leading-relaxed">
+                  {r.description}
+                </p>
               </div>
-              <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${r.color} group-hover:underline`}>
+              <span
+                className={`inline-flex items-center gap-1.5 text-xs font-semibold ${r.color} group-hover:underline`}
+              >
                 {r.cta}
                 <ExternalLink size={12} />
               </span>
@@ -110,7 +123,9 @@ export default function DeveloperSupportPage() {
               className="rounded-2xl bg-white/5 border border-white/10 p-6 space-y-2"
             >
               <h4 className="text-sm font-semibold text-white">{faq.q}</h4>
-              <p className="text-blue-200/60 text-sm leading-relaxed">{faq.a}</p>
+              <p className="text-blue-200/60 text-sm leading-relaxed">
+                {faq.a}
+              </p>
             </div>
           ))}
         </div>

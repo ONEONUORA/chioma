@@ -51,30 +51,13 @@ jobs:
         run: pnpm run lint
 
       - name: Check Prettier formatting
-        run: |
-          if pnpm list prettier --depth=0 | grep -q "prettier"; then
-            pnpm exec prettier --check "**/*.{js,jsx,ts,tsx,json,css,md}"
-          else
-            echo "Prettier not installed, skipping formatting check"
-          fi
+        run: pnpm exec prettier --check "**/*.{js,jsx,ts,tsx,json,css,md}"
 
       - name: Run unit tests
-        continue-on-error: true
-        run: |
-          if pnpm list jest --depth=0 | grep -q "jest"; then
-            pnpm test -- --coverage
-          else
-            echo "Jest not installed, skipping unit tests"
-          fi
+        run: pnpm test
 
-      - name: Run E2E tests
-        continue-on-error: true
-        run: |
-          if pnpm list cypress --depth=0 | grep -q "cypress"; then
-            pnpm run test:e2e
-          else
-            echo "Cypress not installed, skipping E2E tests"
-          fi
+      - name: Build Storybook
+        run: pnpm run build-storybook
 
   build:
     name: Build

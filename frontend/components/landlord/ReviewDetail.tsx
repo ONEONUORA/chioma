@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import StarRating from '@/components/common/StarRating';
+import { StarRating } from '@/components/common/StarRating';
 import ReviewResponse from './ReviewResponse';
 
 export default function ReviewDetail({ id }: { id: string }) {
@@ -23,7 +23,7 @@ export default function ReviewDetail({ id }: { id: string }) {
       </Link>
       <div className="bg-slate-800/50 border border-white/10 rounded-2xl p-6 shadow-xl">
         <div className="flex justify-between items-center mb-4">
-          <StarRating rating={mockReview.rating} />
+          <StarRating value={mockReview.rating} readonly />
           <span className="text-sm text-slate-400">{mockReview.date}</span>
         </div>
         <p className="text-white text-lg mb-4">&quot;{mockReview.text}&quot;</p>

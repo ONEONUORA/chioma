@@ -3,12 +3,54 @@
 import { CheckCircle, AlertCircle, Clock, Activity } from 'lucide-react';
 
 const SERVICES = [
-  { id: 'api', name: 'Core API', uptime: '99.98%', status: 'operational', latency: '42ms', incident: null },
-  { id: 'stellar', name: 'Stellar Network Relay', uptime: '99.95%', status: 'operational', latency: '61ms', incident: null },
-  { id: 'payments', name: 'Payment Processing', uptime: '99.97%', status: 'operational', latency: '55ms', incident: null },
-  { id: 'webhooks', name: 'Webhook Delivery', uptime: '99.90%', status: 'degraded', latency: '340ms', incident: 'Elevated delivery latency under investigation.' },
-  { id: 'auth', name: 'Authentication Service', uptime: '100%', status: 'operational', latency: '28ms', incident: null },
-  { id: 'listings', name: 'Property Listings CDN', uptime: '99.99%', status: 'operational', latency: '18ms', incident: null },
+  {
+    id: 'api',
+    name: 'Core API',
+    uptime: '99.98%',
+    status: 'operational',
+    latency: '42ms',
+    incident: null,
+  },
+  {
+    id: 'stellar',
+    name: 'Stellar Network Relay',
+    uptime: '99.95%',
+    status: 'operational',
+    latency: '61ms',
+    incident: null,
+  },
+  {
+    id: 'payments',
+    name: 'Payment Processing',
+    uptime: '99.97%',
+    status: 'operational',
+    latency: '55ms',
+    incident: null,
+  },
+  {
+    id: 'webhooks',
+    name: 'Webhook Delivery',
+    uptime: '99.90%',
+    status: 'degraded',
+    latency: '340ms',
+    incident: 'Elevated delivery latency under investigation.',
+  },
+  {
+    id: 'auth',
+    name: 'Authentication Service',
+    uptime: '100%',
+    status: 'operational',
+    latency: '28ms',
+    incident: null,
+  },
+  {
+    id: 'listings',
+    name: 'Property Listings CDN',
+    uptime: '99.99%',
+    status: 'operational',
+    latency: '18ms',
+    incident: null,
+  },
 ];
 
 const INCIDENTS = [
@@ -18,8 +60,16 @@ const INCIDENTS = [
     title: 'Webhook delivery latency elevated',
     status: 'investigating',
     updates: [
-      { time: '19:42 UTC', message: 'Investigating elevated latency on webhook delivery workers. Payments unaffected.' },
-      { time: '19:15 UTC', message: 'We are aware of elevated latency on the webhooks service and are investigating.' },
+      {
+        time: '19:42 UTC',
+        message:
+          'Investigating elevated latency on webhook delivery workers. Payments unaffected.',
+      },
+      {
+        time: '19:15 UTC',
+        message:
+          'We are aware of elevated latency on the webhooks service and are investigating.',
+      },
     ],
   },
   {
@@ -28,8 +78,15 @@ const INCIDENTS = [
     title: 'Stellar RPC timeout spikes (resolved)',
     status: 'resolved',
     updates: [
-      { time: '14:00 UTC', message: 'Root cause identified — upstream Stellar Horizon node timeout. Switched RPC endpoint. All metrics normal.' },
-      { time: '12:30 UTC', message: 'Investigating increased latency on Stellar Network relay.' },
+      {
+        time: '14:00 UTC',
+        message:
+          'Root cause identified — upstream Stellar Horizon node timeout. Switched RPC endpoint. All metrics normal.',
+      },
+      {
+        time: '12:30 UTC',
+        message: 'Investigating increased latency on Stellar Network relay.',
+      },
     ],
   },
 ];
@@ -76,7 +133,9 @@ export default function ApiStatusPage() {
             Live uptime metrics and incident history for all Chioma services.
           </p>
         </div>
-        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-semibold ${hasIncident ? statusConfig.degraded.bg + ' ' + statusConfig.degraded.color : statusConfig.operational.bg + ' ' + statusConfig.operational.color}`}>
+        <div
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-semibold ${hasIncident ? statusConfig.degraded.bg + ' ' + statusConfig.degraded.color : statusConfig.operational.bg + ' ' + statusConfig.operational.color}`}
+        >
           <Activity size={15} />
           {hasIncident ? 'Partial Outage' : 'All Systems Operational'}
         </div>
@@ -94,27 +153,41 @@ export default function ApiStatusPage() {
               className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 rounded-2xl bg-white/5 border border-white/10 px-6 py-4"
             >
               <div className="flex items-center gap-3 flex-1">
-                <span className={`w-2 h-2 rounded-full flex-shrink-0 ${cfg.dot}`} />
-                <span className="text-sm font-semibold text-white">{service.name}</span>
+                <span
+                  className={`w-2 h-2 rounded-full flex-shrink-0 ${cfg.dot}`}
+                />
+                <span className="text-sm font-semibold text-white">
+                  {service.name}
+                </span>
               </div>
 
               <div className="flex items-center gap-4 sm:gap-6 text-xs ml-5 sm:ml-0">
                 <div className="text-center">
-                  <span className="block text-blue-300/40 mb-0.5">30-day uptime</span>
-                  <span className="font-semibold text-white">{service.uptime}</span>
+                  <span className="block text-blue-300/40 mb-0.5">
+                    30-day uptime
+                  </span>
+                  <span className="font-semibold text-white">
+                    {service.uptime}
+                  </span>
                 </div>
                 <div className="text-center">
                   <span className="block text-blue-300/40 mb-0.5">Latency</span>
-                  <span className="font-semibold text-white">{service.latency}</span>
+                  <span className="font-semibold text-white">
+                    {service.latency}
+                  </span>
                 </div>
-                <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${cfg.bg} ${cfg.color}`}>
+                <div
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${cfg.bg} ${cfg.color}`}
+                >
                   <Icon size={12} />
                   <span className="text-[11px] font-semibold">{cfg.label}</span>
                 </div>
               </div>
 
               {service.incident && (
-                <p className="text-amber-200/70 text-xs ml-5 sm:ml-0 sm:max-w-xs">{service.incident}</p>
+                <p className="text-amber-200/70 text-xs ml-5 sm:ml-0 sm:max-w-xs">
+                  {service.incident}
+                </p>
               )}
             </div>
           );
@@ -135,10 +208,14 @@ export default function ApiStatusPage() {
             >
               <div className="flex items-center justify-between gap-3 flex-wrap">
                 <div>
-                  <h4 className="text-sm font-semibold text-white">{inc.title}</h4>
+                  <h4 className="text-sm font-semibold text-white">
+                    {inc.title}
+                  </h4>
                   <p className="text-blue-300/40 text-xs mt-0.5">{inc.date}</p>
                 </div>
-                <span className={`px-2.5 py-1 rounded-full border text-[11px] font-semibold uppercase tracking-wide ${incidentStatusConfig[inc.status as keyof typeof incidentStatusConfig]}`}>
+                <span
+                  className={`px-2.5 py-1 rounded-full border text-[11px] font-semibold uppercase tracking-wide ${incidentStatusConfig[inc.status as keyof typeof incidentStatusConfig]}`}
+                >
                   {inc.status}
                 </span>
               </div>

@@ -454,7 +454,8 @@ export default function FinancialsPage() {
               <div className="flex justify-start">
                 <div className="flex items-center gap-2">
                   <StatusBadge status={tx.status} />
-                  {(tx.type === 'Security Deposit' || tx.type === 'Deposit Refund') && (
+                  {(tx.type === 'Security Deposit' ||
+                    tx.type === 'Deposit Refund') && (
                     <Link
                       href={`/landlords/financials/escrows/${encodeURIComponent(tx.hash)}`}
                       className="inline-flex items-center rounded-lg border border-blue-500/30 bg-blue-500/10 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-blue-300 hover:bg-blue-500/20 hover:text-white transition-all"

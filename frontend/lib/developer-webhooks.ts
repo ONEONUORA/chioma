@@ -106,11 +106,7 @@ function createMockWebhook(ownerId: string, index: number): DeveloperWebhook {
 
   const statuses: WebhookStatus[] = ['active', 'failed', 'inactive'];
   const methods: WebhookMethod[] = ['POST', 'PUT', 'PATCH'];
-  const labels = [
-    'Payments Collector',
-    'Maintenance Sync',
-    'Compliance Feed',
-  ];
+  const labels = ['Payments Collector', 'Maintenance Sync', 'Compliance Feed'];
   const urls = [
     'https://integrations.example.com/payments/webhook',
     'https://ops.example.com/maintenance/hooks',
@@ -193,7 +189,11 @@ export function isDeveloperPortalUser(user: User | null | undefined) {
   if (user.role === 'admin') return true;
 
   const email = user.email.toLowerCase();
-  return email.includes('developer') || email.includes('dev') || email.includes('integration');
+  return (
+    email.includes('developer') ||
+    email.includes('dev') ||
+    email.includes('integration')
+  );
 }
 
 export function loadDeveloperWebhooks(ownerId: string) {

@@ -8,7 +8,9 @@ interface RecentActivityProps {
   viewAllHref?: string;
 }
 
-const RecentActivity = ({ viewAllHref = '/dashboard/notifications' }: RecentActivityProps) => {
+const RecentActivity = ({
+  viewAllHref = '/dashboard/notifications',
+}: RecentActivityProps) => {
   const MOCK_NOW = new Date('2025-01-24T12:00:00');
 
   // ... activities data ...
@@ -115,12 +117,13 @@ const RecentActivity = ({ viewAllHref = '/dashboard/notifications' }: RecentActi
                   {activity.description}
                 </p>
                 <span
-                  className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${activity.status === 'pending'
+                  className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+                    activity.status === 'pending'
                       ? 'bg-orange-500/10 text-orange-400 border-orange-500/20'
                       : activity.status === 'completed'
                         ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                         : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                    }`}
+                  }`}
                 >
                   {badge.text}
                 </span>
@@ -143,7 +146,5 @@ const RecentActivity = ({ viewAllHref = '/dashboard/notifications' }: RecentActi
     </div>
   );
 };
-
-export default RecentActivity;
 
 export default RecentActivity;

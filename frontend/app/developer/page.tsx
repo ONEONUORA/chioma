@@ -33,9 +33,9 @@ export default function DeveloperOverviewPage() {
       <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
         <h2 className="text-2xl font-semibold text-white">Developer tools</h2>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
-          This portal centralizes the integration surfaces currently available in the
-          frontend. Use it to configure outbound webhooks and validate delivery
-          behavior before wiring production consumers.
+          This portal centralizes the integration surfaces currently available
+          in the frontend. Use it to configure outbound webhooks and validate
+          delivery behavior before wiring production consumers.
         </p>
       </div>
 
@@ -47,7 +47,9 @@ export default function DeveloperOverviewPage() {
             className="rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:border-white/20 hover:bg-white/10"
           >
             <card.icon className="h-8 w-8 text-blue-300" />
-            <h3 className="mt-4 text-lg font-semibold text-white">{card.title}</h3>
+            <h3 className="mt-4 text-lg font-semibold text-white">
+              {card.title}
+            </h3>
             <p className="mt-2 text-sm text-slate-300">{card.description}</p>
           </Link>
         ))}

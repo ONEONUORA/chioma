@@ -7,7 +7,8 @@ const EXAMPLES = [
   {
     id: 'rent-payment',
     title: 'Initiate Rent Payment',
-    description: 'Send USDC rent from a tenant wallet to landlord + agent via Stellar.',
+    description:
+      'Send USDC rent from a tenant wallet to landlord + agent via Stellar.',
     language: 'typescript',
     code: `import { ChiomaClient } from '@chioma/sdk';
 
@@ -27,7 +28,8 @@ console.log(payment.stellarTxHash);
   {
     id: 'webhook-verify',
     title: 'Verify a Webhook Signature',
-    description: 'Validate the X-Chioma-Signature header to ensure authenticity.',
+    description:
+      'Validate the X-Chioma-Signature header to ensure authenticity.',
     language: 'typescript',
     code: `import { verifyWebhookSignature } from '@chioma/sdk/webhooks';
 
@@ -53,7 +55,8 @@ app.post('/chioma-webhook', (req, res) => {
   {
     id: 'list-properties',
     title: 'List Available Properties',
-    description: 'Fetch paginated property listings with optional location filter.',
+    description:
+      'Fetch paginated property listings with optional location filter.',
     language: 'typescript',
     code: `import { ChiomaClient } from '@chioma/sdk';
 
@@ -108,7 +111,8 @@ export default function ExamplesPage() {
       <div>
         <h2 className="text-2xl font-bold text-white">Code Examples</h2>
         <p className="text-blue-200/60 text-sm mt-1">
-          Ready-to-run snippets covering the most common Chioma integration patterns.
+          Ready-to-run snippets covering the most common Chioma integration
+          patterns.
         </p>
       </div>
 
@@ -126,8 +130,12 @@ export default function ExamplesPage() {
                   <Code2 size={15} className="text-indigo-400" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-white">{ex.title}</h3>
-                  <p className="text-blue-300/50 text-xs mt-0.5">{ex.description}</p>
+                  <h3 className="text-sm font-semibold text-white">
+                    {ex.title}
+                  </h3>
+                  <p className="text-blue-300/50 text-xs mt-0.5">
+                    {ex.description}
+                  </p>
                 </div>
               </div>
               <button

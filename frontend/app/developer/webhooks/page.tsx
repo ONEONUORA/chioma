@@ -58,7 +58,9 @@ export default function DeveloperWebhooksPage() {
         );
 
         if (cancelled) return;
-        setWebhooks(response.data.filter((webhook) => webhook.ownerId === user.id));
+        setWebhooks(
+          response.data.filter((webhook) => webhook.ownerId === user.id),
+        );
         setUsingFallback(false);
       } catch {
         if (cancelled) return;
@@ -136,10 +138,14 @@ export default function DeveloperWebhooksPage() {
         };
 
         try {
-          await apiClient.put(`/developer/webhooks/${editingWebhook.id}`, nextWebhook, {
-            retries: 1,
-            timeoutMs: 5000,
-          });
+          await apiClient.put(
+            `/developer/webhooks/${editingWebhook.id}`,
+            nextWebhook,
+            {
+              retries: 1,
+              timeoutMs: 5000,
+            },
+          );
           setUsingFallback(false);
         } catch {
           setUsingFallback(true);
@@ -240,19 +246,27 @@ export default function DeveloperWebhooksPage() {
     toast.success('Webhook archived');
   };
 
-  const handleTest = async (webhook: DeveloperWebhook, event?: string, payload?: string) => {
+  const handleTest = async (
+    webhook: DeveloperWebhook,
+    event?: string,
+    payload?: string,
+  ) => {
     const eventName = event ?? webhook.events[0] ?? 'agreement.created';
     const payloadBody = payload ?? buildPayloadExample(eventName);
     const log = createWebhookLog(webhook, eventName, 'success', payloadBody);
 
     try {
-      await apiClient.post(`/developer/webhooks/${webhook.id}/test`, {
-        event: eventName,
-        payload: payloadBody,
-      }, {
-        retries: 1,
-        timeoutMs: 5000,
-      });
+      await apiClient.post(
+        `/developer/webhooks/${webhook.id}/test`,
+        {
+          event: eventName,
+          payload: payloadBody,
+        },
+        {
+          retries: 1,
+          timeoutMs: 5000,
+        },
+      );
       setUsingFallback(false);
     } catch {
       setUsingFallback(true);
@@ -282,23 +296,32 @@ export default function DeveloperWebhooksPage() {
       (log) => log.webhookId === webhook.id && log.status === 'failed',
     );
 
-    const payload = failedLog?.payload ?? buildPayloadExample(webhook.events[0] ?? 'agreement.created');
+    const payload =
+      failedLog?.payload ??
+      buildPayloadExample(webhook.events[0] ?? 'agreement.created');
     const event = failedLog?.event ?? webhook.events[0] ?? 'agreement.created';
 
     try {
-      await apiClient.post(`/developer/webhooks/${webhook.id}/retry`, {
-        event,
-        payload,
-      }, {
-        retries: 1,
-        timeoutMs: 5000,
-      });
+      await apiClient.post(
+        `/developer/webhooks/${webhook.id}/retry`,
+        {
+          event,
+          payload,
+        },
+        {
+          retries: 1,
+          timeoutMs: 5000,
+        },
+      );
       setUsingFallback(false);
     } catch {
       setUsingFallback(true);
     }
 
-    persistLogs([createWebhookLog(webhook, event, 'success', payload), ...logs]);
+    persistLogs([
+      createWebhookLog(webhook, event, 'success', payload),
+      ...logs,
+    ]);
     toast.success('Retry queued');
   };
 
@@ -334,8 +357,8 @@ export default function DeveloperWebhooksPage() {
               Deliver Chioma events to your systems
             </h2>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300 sm:text-base">
-              Create endpoints, inspect delivery history, retry failed events, and
-              validate payload examples before production rollout.
+              Create endpoints, inspect delivery history, retry failed events,
+              and validate payload examples before production rollout.
             </p>
           </div>
 
@@ -362,9 +385,9 @@ export default function DeveloperWebhooksPage() {
 
         {usingFallback ? (
           <div className="mt-4 rounded-2xl border border-amber-300/20 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
-            Backend webhook endpoints are unavailable in this environment. The page is
-            using local persisted demo data so create, edit, delete, archive, test,
-            and retry flows remain usable.
+            Backend webhook endpoints are unavailable in this environment. The
+            page is using local persisted demo data so create, edit, delete,
+            archive, test, and retry flows remain usable.
           </div>
         ) : null}
       </header>
@@ -383,7 +406,9 @@ export default function DeveloperWebhooksPage() {
           }}
           onDelete={(webhook) => setPendingAction({ type: 'delete', webhook })}
           onToggle={handleToggle}
-          onArchive={(webhook) => setPendingAction({ type: 'archive', webhook })}
+          onArchive={(webhook) =>
+            setPendingAction({ type: 'archive', webhook })
+          }
           onTest={(webhook) => {
             setSelectedId(webhook.id);
             setTestWebhook(webhook);
@@ -406,9 +431,18 @@ export default function DeveloperWebhooksPage() {
                   </div>
 
                   <div className="grid gap-4 sm:grid-cols-3">
-                    <MetricCard label="Deliveries" value={String(selectedWebhook.stats.deliveries)} />
-                    <MetricCard label="Failures" value={String(selectedWebhook.stats.failedDeliveries)} />
-                    <MetricCard label="Success rate" value={`${selectedWebhook.stats.successRate}%`} />
+                    <MetricCard
+                      label="Deliveries"
+                      value={String(selectedWebhook.stats.deliveries)}
+                    />
+                    <MetricCard
+                      label="Failures"
+                      value={String(selectedWebhook.stats.failedDeliveries)}
+                    />
+                    <MetricCard
+                      label="Success rate"
+                      value={`${selectedWebhook.stats.successRate}%`}
+                    />
                   </div>
 
                   <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4">
@@ -491,7 +525,9 @@ export default function DeveloperWebhooksPage() {
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4">
-      <p className="text-xs uppercase tracking-[0.16em] text-slate-400">{label}</p>
+      <p className="text-xs uppercase tracking-[0.16em] text-slate-400">
+        {label}
+      </p>
       <p className="mt-2 text-2xl font-semibold text-white">{value}</p>
     </div>
   );

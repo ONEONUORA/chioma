@@ -21,10 +21,30 @@ const ENDPOINT_GROUPS = [
     color: 'text-emerald-400',
     bg: 'bg-emerald-500/15',
     endpoints: [
-      { method: 'POST', path: '/payments/rent', summary: 'Initiate a rent payment', badge: 'new' },
-      { method: 'GET', path: '/payments/:id', summary: 'Retrieve payment by ID', badge: null },
-      { method: 'GET', path: '/payments', summary: 'List all payments (paginated)', badge: null },
-      { method: 'POST', path: '/payments/escrow/release', summary: 'Release escrow deposit', badge: null },
+      {
+        method: 'POST',
+        path: '/payments/rent',
+        summary: 'Initiate a rent payment',
+        badge: 'new',
+      },
+      {
+        method: 'GET',
+        path: '/payments/:id',
+        summary: 'Retrieve payment by ID',
+        badge: null,
+      },
+      {
+        method: 'GET',
+        path: '/payments',
+        summary: 'List all payments (paginated)',
+        badge: null,
+      },
+      {
+        method: 'POST',
+        path: '/payments/escrow/release',
+        summary: 'Release escrow deposit',
+        badge: null,
+      },
     ],
   },
   {
@@ -34,10 +54,30 @@ const ENDPOINT_GROUPS = [
     color: 'text-blue-400',
     bg: 'bg-blue-500/15',
     endpoints: [
-      { method: 'GET', path: '/properties', summary: 'List property listings', badge: null },
-      { method: 'POST', path: '/property-listings/wizard/start', summary: 'Start listing wizard draft', badge: null },
-      { method: 'PATCH', path: '/property-listings/wizard/:id/step', summary: 'Save wizard step', badge: null },
-      { method: 'POST', path: '/property-listings/wizard/:id/publish', summary: 'Publish listing', badge: null },
+      {
+        method: 'GET',
+        path: '/properties',
+        summary: 'List property listings',
+        badge: null,
+      },
+      {
+        method: 'POST',
+        path: '/property-listings/wizard/start',
+        summary: 'Start listing wizard draft',
+        badge: null,
+      },
+      {
+        method: 'PATCH',
+        path: '/property-listings/wizard/:id/step',
+        summary: 'Save wizard step',
+        badge: null,
+      },
+      {
+        method: 'POST',
+        path: '/property-listings/wizard/:id/publish',
+        summary: 'Publish listing',
+        badge: null,
+      },
     ],
   },
   {
@@ -47,9 +87,24 @@ const ENDPOINT_GROUPS = [
     color: 'text-indigo-400',
     bg: 'bg-indigo-500/15',
     endpoints: [
-      { method: 'POST', path: '/webhooks', summary: 'Register a new webhook endpoint', badge: null },
-      { method: 'GET', path: '/webhooks', summary: 'List all registered webhooks', badge: null },
-      { method: 'DELETE', path: '/webhooks/:id', summary: 'Delete a webhook', badge: null },
+      {
+        method: 'POST',
+        path: '/webhooks',
+        summary: 'Register a new webhook endpoint',
+        badge: null,
+      },
+      {
+        method: 'GET',
+        path: '/webhooks',
+        summary: 'List all registered webhooks',
+        badge: null,
+      },
+      {
+        method: 'DELETE',
+        path: '/webhooks/:id',
+        summary: 'Delete a webhook',
+        badge: null,
+      },
     ],
   },
   {
@@ -59,9 +114,24 @@ const ENDPOINT_GROUPS = [
     color: 'text-violet-400',
     bg: 'bg-violet-500/15',
     endpoints: [
-      { method: 'POST', path: '/auth/login', summary: 'Authenticate a user', badge: null },
-      { method: 'POST', path: '/auth/refresh', summary: 'Refresh access token', badge: null },
-      { method: 'POST', path: '/auth/logout', summary: 'Invalidate session', badge: null },
+      {
+        method: 'POST',
+        path: '/auth/login',
+        summary: 'Authenticate a user',
+        badge: null,
+      },
+      {
+        method: 'POST',
+        path: '/auth/refresh',
+        summary: 'Refresh access token',
+        badge: null,
+      },
+      {
+        method: 'POST',
+        path: '/auth/logout',
+        summary: 'Invalidate session',
+        badge: null,
+      },
     ],
   },
   {
@@ -71,8 +141,18 @@ const ENDPOINT_GROUPS = [
     color: 'text-cyan-400',
     bg: 'bg-cyan-500/15',
     endpoints: [
-      { method: 'GET', path: '/users/:id', summary: 'Get user profile', badge: null },
-      { method: 'PATCH', path: '/users/:id', summary: 'Update user profile', badge: null },
+      {
+        method: 'GET',
+        path: '/users/:id',
+        summary: 'Get user profile',
+        badge: null,
+      },
+      {
+        method: 'PATCH',
+        path: '/users/:id',
+        summary: 'Update user profile',
+        badge: null,
+      },
     ],
   },
 ];
@@ -86,7 +166,9 @@ const methodColor: Record<string, string> = {
 };
 
 export default function ApiDocsPage() {
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({ payments: true });
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
+    payments: true,
+  });
   const [query, setQuery] = useState('');
 
   const toggle = (id: string) =>
@@ -109,7 +191,7 @@ export default function ApiDocsPage() {
         <div>
           <h2 className="text-2xl font-bold text-white">API Documentation</h2>
           <p className="text-blue-200/60 text-sm mt-1">
-            REST endpoints for Chioma's rental infrastructure. Base URL:{' '}
+            REST endpoints for Chioma&apos;s rental infrastructure. Base URL:{' '}
             <code className="font-mono text-indigo-300 bg-white/5 px-1.5 py-0.5 rounded-md text-xs">
               https://api.chioma.app/v1
             </code>
@@ -155,10 +237,14 @@ export default function ApiDocsPage() {
                 className="w-full flex items-center justify-between px-6 py-4 hover:bg-white/5 transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <span className={`w-8 h-8 rounded-lg ${group.bg} flex items-center justify-center`}>
+                  <span
+                    className={`w-8 h-8 rounded-lg ${group.bg} flex items-center justify-center`}
+                  >
                     <Icon size={16} className={group.color} />
                   </span>
-                  <span className="text-sm font-semibold text-white">{group.label}</span>
+                  <span className="text-sm font-semibold text-white">
+                    {group.label}
+                  </span>
                   <span className="px-2 py-0.5 rounded-full bg-white/10 text-blue-300/60 text-[11px] font-medium">
                     {group.endpoints.length}
                   </span>
@@ -178,11 +264,17 @@ export default function ApiDocsPage() {
                       id={`dev-docs-ep-${ep.method.toLowerCase()}-${ep.path.replace(/[/:]/g, '-').replace(/^-/, '')}`}
                       className="flex items-center gap-4 px-6 py-3.5 hover:bg-white/5 transition-colors cursor-pointer"
                     >
-                      <span className={`px-2 py-0.5 rounded-md text-[11px] font-bold w-14 text-center flex-shrink-0 ${methodColor[ep.method]}`}>
+                      <span
+                        className={`px-2 py-0.5 rounded-md text-[11px] font-bold w-14 text-center flex-shrink-0 ${methodColor[ep.method]}`}
+                      >
                         {ep.method}
                       </span>
-                      <code className="text-blue-200/90 text-sm font-mono">{ep.path}</code>
-                      <span className="text-blue-300/50 text-sm flex-1 hidden sm:block">{ep.summary}</span>
+                      <code className="text-blue-200/90 text-sm font-mono">
+                        {ep.path}
+                      </code>
+                      <span className="text-blue-300/50 text-sm flex-1 hidden sm:block">
+                        {ep.summary}
+                      </span>
                       {ep.badge && (
                         <span className="px-2 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-[10px] font-semibold uppercase">
                           {ep.badge}

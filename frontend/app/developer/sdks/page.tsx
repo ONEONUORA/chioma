@@ -14,7 +14,12 @@ const SDKS = [
     repoUrl: 'https://github.com/chioma-protocol/chioma-js',
     description:
       'Full-featured SDK for Node.js and browser environments. Includes typed request/response interfaces for all Chioma API resources.',
-    features: ['TypeScript-first', 'Tree-shakeable', 'Webhook helpers', 'Stellar SDK integration'],
+    features: [
+      'TypeScript-first',
+      'Tree-shakeable',
+      'Webhook helpers',
+      'Stellar SDK integration',
+    ],
   },
   {
     id: 'python',
@@ -26,7 +31,12 @@ const SDKS = [
     repoUrl: 'https://github.com/chioma-protocol/chioma-python',
     description:
       'Async-first Python SDK built on httpx. Supports all payment and listing endpoints with Pydantic models.',
-    features: ['Async / await', 'Pydantic models', 'Stellar XDR signing', 'Webhook verification'],
+    features: [
+      'Async / await',
+      'Pydantic models',
+      'Stellar XDR signing',
+      'Webhook verification',
+    ],
   },
   {
     id: 'rust',
@@ -38,7 +48,12 @@ const SDKS = [
     repoUrl: 'https://github.com/chioma-protocol/chioma-rs',
     description:
       'High-performance Rust crate for backend services that need to interact with the Chioma payment layer and Stellar network.',
-    features: ['No-std compatible', 'WASM target', 'Soroban bindings', 'Rate-limit retries'],
+    features: [
+      'No-std compatible',
+      'WASM target',
+      'Soroban bindings',
+      'Rate-limit retries',
+    ],
   },
   {
     id: 'go',
@@ -50,7 +65,12 @@ const SDKS = [
     repoUrl: 'https://github.com/chioma-protocol/chioma-go',
     description:
       'Idiomatic Go client with context propagation, retries, and structured logging support.',
-    features: ['Context-aware', 'Structured logging', 'Retry backoff', 'Webhook middleware'],
+    features: [
+      'Context-aware',
+      'Structured logging',
+      'Retry backoff',
+      'Webhook middleware',
+    ],
   },
 ];
 
@@ -82,7 +102,8 @@ export default function SdksPage() {
       <div>
         <h2 className="text-2xl font-bold text-white">SDKs & Libraries</h2>
         <p className="text-blue-200/60 text-sm mt-1">
-          Official client libraries maintained by the Chioma core team. All SDKs are open-source.
+          Official client libraries maintained by the Chioma core team. All SDKs
+          are open-source.
         </p>
       </div>
 
@@ -100,23 +121,35 @@ export default function SdksPage() {
                   <Layers size={18} className="text-white/70" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-white">{sdk.language}</h3>
-                  <code className="text-xs text-blue-200/60 font-mono">{sdk.packageName}</code>
+                  <h3 className="text-sm font-bold text-white">
+                    {sdk.language}
+                  </h3>
+                  <code className="text-xs text-blue-200/60 font-mono">
+                    {sdk.packageName}
+                  </code>
                 </div>
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
-                <span className={`px-2 py-0.5 rounded-full border text-[11px] font-semibold uppercase ${statusBadge[sdk.status]}`}>
+                <span
+                  className={`px-2 py-0.5 rounded-full border text-[11px] font-semibold uppercase ${statusBadge[sdk.status]}`}
+                >
                   {sdk.status}
                 </span>
-                <span className="text-xs text-blue-300/40 font-mono">v{sdk.version}</span>
+                <span className="text-xs text-blue-300/40 font-mono">
+                  v{sdk.version}
+                </span>
               </div>
             </div>
 
-            <p className="text-blue-200/70 text-xs leading-relaxed">{sdk.description}</p>
+            <p className="text-blue-200/70 text-xs leading-relaxed">
+              {sdk.description}
+            </p>
 
             {/* Install command */}
             <div className="flex items-center gap-2 rounded-xl bg-slate-950/60 border border-white/10 px-4 py-2.5">
-              <code className="text-sm text-emerald-300 font-mono flex-1">{sdk.installCmd}</code>
+              <code className="text-sm text-emerald-300 font-mono flex-1">
+                {sdk.installCmd}
+              </code>
               <button
                 id={`dev-sdk-copy-${sdk.id}`}
                 onClick={() => handleCopy(sdk.id, sdk.installCmd)}
