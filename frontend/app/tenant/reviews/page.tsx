@@ -27,9 +27,9 @@ export default function TenantReviewsPage() {
           <p className="text-xl mb-8 text-blue-200/80">
             Reviews are only available to verified tenants.
           </p>
-          <Link href="/login">
+          <Link href="/">
             <Button className="bg-white text-neutral-900 hover:bg-neutral-100 font-semibold px-8 h-12 text-lg">
-              Sign in as Tenant
+              Connect Wallet
             </Button>
           </Link>
         </div>

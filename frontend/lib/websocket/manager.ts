@@ -113,7 +113,13 @@ export function connect(options: ConnectionOptions): void {
   });
 
   socket.on('connect_error', (error) => {
-    console.error('[WS] Connection error:', error.message);
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : typeof error === 'string'
+          ? error
+          : 'Unknown connection error';
+    console.warn('[WS] Connection error:', errorMessage);
     notifyStatus('disconnected');
   });
 

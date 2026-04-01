@@ -1,15 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Wallet, Loader2 } from 'lucide-react';
-import toast from 'react-hot-toast';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/store/authStore';
+import { initializeStellarWalletsKit, StellarWalletsKit } from '@/lib/stellar-wallets-kit';
+import toast from 'react-hot-toast';
 import {
-  getFreighterPublicKey,
   requestChallenge,
-  signChallengeXdr,
   verifySignature,
 } from '@/lib/stellar-auth';
+import * as StellarSdk from '@stellar/stellar-sdk';
 
 interface WalletConnectButtonProps {
   onSuccess?: () => void;
@@ -22,83 +21,124 @@ export default function WalletConnectButton({
   className = '',
   buttonText = 'Connect Wallet',
 }: WalletConnectButtonProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const buttonWrapperRef = useRef<HTMLDivElement>(null);
   const { setTokens } = useAuth();
+  const isInitializedRef = useRef(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
-  const handleWalletConnect = async () => {
-    setIsLoading(true);
+  // Ensure component only renders on client
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted || !buttonWrapperRef.current || isInitializedRef.current) return;
 
     try {
-      // 1. Get Public Key from Freighter
-      const publicKey = await getFreighterPublicKey();
+      initializeStellarWalletsKit();
+      
+      // Create the wallet kit button
+      StellarWalletsKit.createButton(buttonWrapperRef.current);
+      isInitializedRef.current = true;
 
-      // 2. Get Challenge
-      const challengeXdr = await requestChallenge(publicKey);
+      // Override the button click handler to add our authentication logic
+      const handleWalletConnect = async () => {
+        if (isConnecting) return;
+        setIsConnecting(true);
 
-      // 3. Sign Challenge
-      toast.loading('Please sign the transaction in your wallet...', {
-        id: 'wallet-sign',
-      });
-      let signature = '';
-      try {
-        signature = await signChallengeXdr(challengeXdr);
-        toast.dismiss('wallet-sign');
-      } catch (signError: unknown) {
-        toast.dismiss('wallet-sign');
-        toast.error('Authentication cancelled');
-        throw signError;
-      }
+        try {
+          const { address } = await StellarWalletsKit.getAddress();
+          
+          if (!address) {
+            throw new Error('Failed to get wallet address');
+          }
 
-      // 4. Verify Signature
-      toast.loading('Verifying authentication...', { id: 'wallet-verify' });
-      const result = await verifySignature(publicKey, challengeXdr, signature);
-      toast.dismiss('wallet-verify');
+          // Get Challenge
+          toast.loading('Getting authentication challenge...', {
+            id: 'wallet-challenge',
+          });
+          const challengeXdr = await requestChallenge(address);
+          toast.dismiss('wallet-challenge');
 
-      // 5. Manage session state
-      if (result.accessToken && result.refreshToken && result.user) {
-        setTokens(result.accessToken, result.refreshToken, result.user);
-        toast.success('Successfully logged in with Wallet!');
-        if (onSuccess) {
-          onSuccess();
+          // Sign Challenge
+          toast.loading('Please sign the transaction in your wallet...', {
+            id: 'wallet-sign',
+          });
+          
+          const { signedTxXdr } = await StellarWalletsKit.signTransaction(
+            challengeXdr,
+            {
+              networkPassphrase: StellarSdk.Networks.PUBLIC,
+              address,
+            }
+          );
+          toast.dismiss('wallet-sign');
+
+          // Verify Signature
+          toast.loading('Verifying authentication...', { id: 'wallet-verify' });
+          const result = await verifySignature(address, challengeXdr, signedTxXdr);
+          toast.dismiss('wallet-verify');
+
+          // Manage session state
+          if (result.accessToken && result.refreshToken && result.user) {
+            setTokens(result.accessToken, result.refreshToken, result.user);
+            toast.success('Successfully logged in with Wallet!');
+            if (onSuccess) {
+              onSuccess();
+            }
+          } else {
+            throw new Error('Invalid authentication response');
+          }
+        } catch (error: unknown) {
+          toast.dismiss('wallet-challenge');
+          toast.dismiss('wallet-sign');
+          toast.dismiss('wallet-verify');
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          if (
+            !errorMessage.toLowerCase().includes('cancelled') &&
+            !errorMessage.toLowerCase().includes('reject') &&
+            !errorMessage.toLowerCase().includes('user denied')
+          ) {
+            toast.error(errorMessage || 'Wallet connection failed');
+          }
+          console.error('Wallet connect error:', error);
+        } finally {
+          setIsConnecting(false);
         }
-      } else {
-        throw new Error('Invalid authentication response');
-      }
-    } catch (error: unknown) {
-      toast.dismiss('wallet-sign');
-      toast.dismiss('wallet-verify');
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
-      if (
-        !errorMessage.toLowerCase().includes('cancelled') &&
-        !errorMessage.toLowerCase().includes('reject')
-      ) {
-        toast.error(errorMessage || 'Wallet connection failed');
-      }
-      console.error('Wallet connect error:', error);
-    } finally {
-      setIsLoading(false);
+      };
+
+      // Find and override the button's click handler
+      const observer = new MutationObserver(() => {
+        const button = buttonWrapperRef.current?.querySelector('button');
+        if (button && !button.dataset.customHandler) {
+          button.dataset.customHandler = 'true';
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleWalletConnect();
+          });
+        }
+      });
+
+      observer.observe(buttonWrapperRef.current, {
+        childList: true,
+        subtree: true,
+      });
+
+      return () => {
+        observer.disconnect();
+      };
+    } catch (error) {
+      console.error('Failed to initialize wallet button:', error);
+      toast.error('Failed to initialize wallet connection');
     }
-  };
+  }, [setTokens, onSuccess, isConnecting, isMounted]);
 
-  return (
-    <button
-      type="button"
-      onClick={handleWalletConnect}
-      disabled={isLoading}
-      className={`relative w-full py-3 px-4 bg-neutral-900 border border-neutral-800 text-white font-semibold rounded-xl transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-75 disabled:cursor-not-allowed group overflow-hidden hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:border-neutral-700 ${className}`}
-    >
-      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+  // Don't render anything until mounted on client
+  if (!isMounted) {
+    return <div className={className} />;
+  }
 
-      {isLoading ? (
-        <Loader2 className="w-5 h-5 animate-spin text-white/80" />
-      ) : (
-        <Wallet className="w-5 h-5 text-white/90 group-hover:text-white transition-colors" />
-      )}
-
-      <span className="relative z-10">
-        {isLoading ? 'Connecting...' : buttonText}
-      </span>
-    </button>
-  );
+  return <div ref={buttonWrapperRef} className={className} suppressHydrationWarning />;
 }

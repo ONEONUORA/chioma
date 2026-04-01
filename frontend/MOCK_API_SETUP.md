@@ -30,16 +30,11 @@ The app will start at `http://localhost:3000`
 
 ### 3. Login with Demo Credentials
 
-Use any of these demo emails to login (password doesn't matter):
+Use this demo account to login (password doesn't matter in mock mode):
 
 | Email                   | Role     | Access                                     |
 | ----------------------- | -------- | ------------------------------------------ |
-| `tenant@chioma.local`   | Tenant   | Tenant dashboard, disputes, reviews        |
-| `landlord@chioma.local` | Landlord | Landlord dashboard, documents, maintenance |
-| `agent@chioma.local`    | Agent    | Agent dashboard                            |
-| `admin@chioma.local`    | Admin    | Admin dashboard                            |
-| `auditor@chioma.local`  | Auditor  | Audit logs                                 |
-| `support@chioma.local`  | Support  | Support dashboard                          |
+| `admin@chioma.local`    | Admin    | All users dashboard - access all features  |
 
 **Note:** Password field is ignored in mock mode. Just enter any password.
 
@@ -146,11 +141,7 @@ pnpm dev
 
 ## Testing Different User Roles
 
-1. Login with `tenant@chioma.local` to test tenant features
-2. Logout and login with `landlord@chioma.local` to test landlord features
-3. Repeat for other roles
-
-Each role has access to different pages and features based on the app's role-based access control.
+Login with `admin@chioma.local` to access the all users dashboard with full access to all features and roles.
 
 ## Limitations
 

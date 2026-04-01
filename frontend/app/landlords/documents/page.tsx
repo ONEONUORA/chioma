@@ -27,9 +27,9 @@ export default function LandlordDocumentsPage() {
           <p className="text-xl mb-8 text-blue-200/80">
             Document management is only available to verified landlords.
           </p>
-          <Link href="/login">
+          <Link href="/">
             <Button className="bg-white text-neutral-900 hover:bg-neutral-100 font-semibold px-8 h-12 text-lg">
-              Sign in as Landlord
+              Connect Wallet
             </Button>
           </Link>
         </div>

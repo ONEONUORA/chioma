@@ -13,18 +13,14 @@ The app will be available at `http://localhost:3000`
 
 ### Step 2: Login with Demo Account
 
-Choose any demo email:
+Use the demo account to access the all users dashboard:
 
 ```
-Email: tenant@chioma.local
+Email: admin@chioma.local
 Password: (any password)
 ```
 
-Or try other roles:
-
-- `landlord@chioma.local` - Landlord dashboard
-- `admin@chioma.local` - Admin dashboard
-- `agent@chioma.local` - Agent dashboard
+This account gives you access to all features and user roles.
 
 ### Step 3: Explore Demo Data
 

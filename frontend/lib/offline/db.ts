@@ -291,10 +291,13 @@ export async function getUnresolvedConflicts(): Promise<ConflictRecord[]> {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction([STORES.CONFLICTS], 'readonly');
     const store = transaction.objectStore(STORES.CONFLICTS);
-    const index = store.index('resolved');
-    const request = index.getAll(IDBKeyRange.only(false));
+    const request = store.getAll();
 
-    request.onsuccess = () => resolve(request.result);
+    request.onsuccess = () => {
+      const allConflicts = request.result as ConflictRecord[];
+      const unresolved = allConflicts.filter(c => c.resolved === false);
+      resolve(unresolved);
+    };
     request.onerror = () => reject(request.error);
   });
 }

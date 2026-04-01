@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import Logo from '@/components/Logo';
 import { Menu, X } from 'lucide-react';
 import { NAV_LINKS } from '@/constants/navigation';
+import WalletConnectButton from '@/components/auth/WalletConnectButton';
 
 interface NavbarProps {
   theme?: 'light' | 'dark';
@@ -77,20 +78,9 @@ const Navbar = ({ theme = 'dark' }: NavbarProps) => {
           })}
         </div>
 
-        {/* Auth Actions */}
+        {/* Connect Wallet Button */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link
-            href="/login"
-            className="text-sm font-semibold text-blue-200 hover:text-white transition-colors"
-          >
-            Log In
-          </Link>
-          <Link
-            href="/signup"
-            className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg hover:shadow-xl"
-          >
-            Sign Up
-          </Link>
+          <WalletConnectButton className="px-6 py-2.5 text-sm" buttonText="Connect Wallet" />
         </div>
 
         {/* Mobile Menu Button */}
@@ -125,20 +115,9 @@ const Navbar = ({ theme = 'dark' }: NavbarProps) => {
             })}
 
             <div className="pt-4 flex flex-col space-y-4 border-t border-white/10">
-              <Link
-                href="/login"
-                className="text-lg font-medium text-blue-300 hover:text-blue-200 transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Log In
-              </Link>
-              <Link
-                href="/signup"
-                className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-lg text-center font-semibold shadow-lg transition-all"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Sign Up
-              </Link>
+              <div onClick={() => setIsMobileMenuOpen(false)}>
+                <WalletConnectButton className="px-6 py-3" buttonText="Connect Wallet" />
+              </div>
             </div>
           </div>
         </div>
